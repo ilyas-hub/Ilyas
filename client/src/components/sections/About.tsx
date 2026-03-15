@@ -190,7 +190,7 @@ const About = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
         >
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <motion.div
               key={stat.label}
               className="glass-card text-center"

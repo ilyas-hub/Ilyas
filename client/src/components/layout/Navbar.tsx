@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaCode } from 'react-icons/fa';
-import { navLinks, personalInfo } from '../../data';
+import { navLinks } from '../../data';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
