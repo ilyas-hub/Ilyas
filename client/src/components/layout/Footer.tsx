@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaHeart, FaCode } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaHeart, FaCode, FaWhatsapp } from 'react-icons/fa';
 import { navLinks, socialLinks, personalInfo } from '../../data';
 
 const iconComponents: { [key: string]: React.ComponentType<{ className?: string }> } = {
@@ -134,11 +134,15 @@ const Footer = () => {
                 {personalInfo.email}
               </p>
               {personalInfo.phone && (
-                <p className="text-light-400">
-                  <span className="text-primary-500">Phone:</span>
-                  <br />
-                  {personalInfo.phone}
-                </p>
+                <a
+                  href="https://wa.me/918080611513"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-light-400 hover:text-green-400 transition-colors"
+                >
+                  <FaWhatsapp className="text-green-500 text-lg" />
+                  <span>{personalInfo.phone}</span>
+                </a>
               )}
               {personalInfo.location && (
                 <p className="text-light-400">

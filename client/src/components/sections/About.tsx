@@ -183,17 +183,24 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* Stats Section */}
+        {/* Stats Section — Staggered entry */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
         >
           {stats.map((stat) => (
             <motion.div
               key={stat.label}
               className="glass-card text-center"
+              variants={{
+                hidden: { opacity: 0, y: 30, scale: 0.9 },
+                visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } },
+              }}
               whileHover={{ scale: 1.05, y: -10 }}
               transition={{ type: 'spring', stiffness: 300 }}
             >

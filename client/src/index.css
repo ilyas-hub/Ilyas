@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
-
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
 
 /* Custom Theme Variables */
 :root {
@@ -17,9 +17,9 @@
   --color-light-dark: #F5F5F5;
 
   /* Fonts */
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-accent: 'Bangers', cursive;
+  --font-heading: 'General Sans', Inter, system-ui, sans-serif;
+  --font-body: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-form: 'Libre Franklin', Inter, system-ui, sans-serif;
 
   /* Shadows */
   --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -219,7 +219,7 @@
   /* Section Title */
   .section-title {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     font-weight: 700;
     color: var(--color-dark);
     position: relative;
@@ -232,7 +232,7 @@
 
   @media (min-width: 768px) {
     .section-title {
-      font-size: 3rem;
+      font-size: 3.25rem;
     }
   }
 
@@ -287,6 +287,7 @@
     border: 2px solid #E0E0E0;
     outline: none;
     transition: all 0.3s ease;
+    font-family: var(--font-form);
   }
 
   .input-field:focus {
@@ -321,6 +322,22 @@
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 20px rgba(211, 47, 47, 0.4); }
   50% { box-shadow: 0 0 40px rgba(211, 47, 47, 0.8); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
 /* Utility Classes */
@@ -401,7 +418,12 @@
   --shadow-glow-gold: 0 0 30px rgba(255, 193, 7, 0.5);
   --shadow-glow-blue: 0 0 30px rgba(25, 118, 210, 0.5);
 
-  --font-family-heading: 'Poppins', sans-serif;
-  --font-family-body: 'Inter', sans-serif;
-  --font-family-accent: 'Bangers', cursive;
+  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-form: 'Libre Franklin', Inter, system-ui, sans-serif;
+  --font-family-heading: 'General Sans', Inter, system-ui, sans-serif;
+  --font-general: 'General Sans', sans-serif;
+  --font-family-sidebar: Inter, system-ui, sans-serif;
+
+  --animate-spin-slow: spin 20s linear infinite;
+  --animate-wave: wave 1.5s ease-in-out 0.3s infinite;
 }

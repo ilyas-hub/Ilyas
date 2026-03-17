@@ -38,19 +38,48 @@ function App() {
       );
     });
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        const href = anchor.getAttribute('href');
-        if (href) {
-          const target = document.querySelector(href);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      });
+    // GSAP ScrollTrigger parallax on floating decorative elements
+    ScrollTrigger.matchMedia({
+      // Desktop only — disable parallax on mobile
+      '(min-width: 768px)': () => {
+        gsap.utils.toArray<HTMLElement>('.floating-element').forEach((el, i) => {
+          gsap.to(el, {
+            yPercent: -30 - i * 10,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el.closest('section') || el,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          });
+        });
+      },
     });
+
+    // Smooth scroll for anchor links (only for <a> tags, not buttons)
+    const handleAnchorClick = (e: Event) => {
+      const anchor = e.currentTarget as HTMLAnchorElement;
+      const href = anchor.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    anchors.forEach((anchor) => {
+      anchor.addEventListener('click', handleAnchorClick);
+    });
+
+    return () => {
+      anchors.forEach((anchor) => {
+        anchor.removeEventListener('click', handleAnchorClick);
+      });
+    };
   }, []);
 
   return (

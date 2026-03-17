@@ -66,13 +66,14 @@ const MarqueeRow = ({
   const duplicated = [...skills, ...skills];
 
   return (
-    <div className="relative overflow-hidden py-2">
+    <div className="relative overflow-hidden py-2" style={{ touchAction: 'pan-y' }}>
       {/* Fade edges */}
       <div className="absolute left-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
 
       <motion.div
         className="flex gap-4 w-max"
+        style={{ touchAction: 'pan-y' }}
         animate={{
           x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
         }}
@@ -113,6 +114,7 @@ const SkillsMarquee = () => {
       id="skills"
       ref={sectionRef}
       className="py-20 md:py-28 bg-white relative overflow-hidden"
+      style={{ touchAction: 'pan-y' }}
     >
       {/* Background decorations */}
       <div className="absolute top-10 left-10 w-40 h-40 bg-primary-500/5 rounded-full floating" />

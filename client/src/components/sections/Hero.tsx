@@ -1,116 +1,106 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaDownload, FaChevronDown } from 'react-icons/fa';
 import gsap from 'gsap';
 import { personalInfo, socialLinks } from '../../data';
+import { useTypewriter } from '../../hooks/useTypewriter';
 
-// Color palette for donut luminance levels (dark → bright)
-const DONUT_COLORS = [
-  '#6366f1', '#818cf8', '#a78bfa', '#c084fc',
-  '#e879f9', '#f472b6', '#fb7185', '#f97316',
-  '#facc15', '#4ade80', '#22d3ee', '#ffffff',
-];
-const DONUT_CHARS = '.,-~:;=!*#$@';
-
-// ASCII Donut — colorful, big, smooth
-const AsciiDonut = () => {
-  const canvasRef = useRef<HTMLPreElement>(null);
-  const A = useRef(0);
-  const B = useRef(0);
-  const frameId = useRef<number>(0);
-  const lastTime = useRef(0);
-
-  const renderFrame = useCallback((timestamp: number) => {
-    if (timestamp - lastTime.current < 33) {
-      frameId.current = requestAnimationFrame(renderFrame);
-      return;
-    }
-    lastTime.current = timestamp;
-
-    const b: number[] = [];
-    const z: number[] = [];
-    const width = 60;
-    const height = 28;
-    const total = width * height;
-
-    for (let k = 0; k < total; k++) {
-      b[k] = -1;
-      z[k] = 0;
-    }
-
-    for (let j = 0; j < 6.28; j += 0.06) {
-      for (let i = 0; i < 6.28; i += 0.015) {
-        const c = Math.sin(i);
-        const d = Math.cos(j);
-        const e = Math.sin(A.current);
-        const f = Math.sin(j);
-        const g = Math.cos(A.current);
-        const h = d + 2;
-        const D = 1 / (c * h * e + f * g + 5);
-        const l = Math.cos(i);
-        const m = Math.cos(B.current);
-        const n = Math.sin(B.current);
-        const t = c * h * g - f * e;
-
-        const x = Math.floor(30 + 28 * D * (l * h * m - t * n));
-        const y = Math.floor(14 + 13 * D * (l * h * n + t * m));
-        const o = x + width * y;
-        const N = Math.floor(
-          8 * ((f * e - c * d * g) * m - c * d * e - f * g - l * d * n)
-        );
-
-        if (y >= 0 && y < height && x >= 0 && x < width && D > z[o]) {
-          z[o] = D;
-          b[o] = N > 0 ? N : 0;
-        }
-      }
-    }
-
-    if (canvasRef.current) {
-      let html = '';
-      for (let k = 0; k < total; k++) {
-        if (k % width === width - 1) {
-          html += '\n';
-        } else if (b[k] >= 0) {
-          const idx = Math.min(b[k], 11);
-          html += `<span style="color:${DONUT_COLORS[idx]};text-shadow:0 0 6px ${DONUT_COLORS[idx]}80">${DONUT_CHARS[idx]}</span>`;
-        } else {
-          html += ' ';
-        }
-      }
-      canvasRef.current.innerHTML = html;
-    }
-
-    A.current += 0.015;
-    B.current += 0.008;
-    frameId.current = requestAnimationFrame(renderFrame);
-  }, []);
-
-  useEffect(() => {
-    frameId.current = requestAnimationFrame(renderFrame);
-    return () => cancelAnimationFrame(frameId.current);
-  }, [renderFrame]);
-
+// Animated profile image with modern effects
+const ProfileHero = () => {
   return (
-    <div
-      className="relative rounded-2xl overflow-hidden flex items-center justify-center"
-      style={{
-        background: 'radial-gradient(ellipse at 30% 40%, #1a1040 0%, #0a0a18 50%, #050510 100%)',
-        boxShadow: '0 0 80px rgba(139, 92, 246, 0.12), 0 0 40px rgba(236, 72, 153, 0.06), 0 25px 60px rgba(0,0,0,0.4)',
-        padding: '12px 8px',
-      }}
-    >
-      <div
-        className="absolute inset-0 rounded-2xl opacity-30"
+    <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto">
+      {/* Animated gradient ring — outer */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
         style={{
-          background: 'linear-gradient(135deg, rgba(139,92,246,0.3) 0%, transparent 40%, transparent 60%, rgba(236,72,153,0.3) 100%)',
+          background: 'conic-gradient(from 0deg, #D32F2F, #FFC107, #1976D2, #D32F2F)',
+          padding: '4px',
         }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+      >
+        <div className="w-full h-full rounded-full bg-light-200" />
+      </motion.div>
+
+      {/* Pulsing glow behind the image */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(211,47,47,0.3) 0%, transparent 70%)',
+        }}
+        animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       />
-      <pre
-        ref={canvasRef}
-        className="relative z-10 text-[8px] sm:text-[10px] md:text-xs leading-[1.1] font-mono select-none whitespace-pre"
-        style={{ letterSpacing: '1.5px' }}
-      />
+
+      {/* Profile image */}
+      <motion.div
+        className="absolute inset-3 sm:inset-4 rounded-full overflow-hidden shadow-2xl"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.3, type: 'spring', stiffness: 120 }}
+      >
+        <img
+          src={personalInfo.avatarUrl}
+          alt={personalInfo.name}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect fill="#D32F2F" width="400" height="400" rx="200"/><text x="200" y="230" fill="white" font-family="sans-serif" font-size="120" font-weight="bold" text-anchor="middle">IS</text></svg>`)}`;
+          }}
+        />
+      </motion.div>
+
+      {/* Floating orbit dots — hidden on mobile to prevent overflow */}
+      {[0, 1, 2].map((i) => (
+        <motion.div
+          key={i}
+          className="absolute w-3 h-3 rounded-full hidden sm:block"
+          style={{
+            background: i === 0 ? '#D32F2F' : i === 1 ? '#FFC107' : '#1976D2',
+            boxShadow: `0 0 12px ${i === 0 ? '#D32F2F' : i === 1 ? '#FFC107' : '#1976D2'}80`,
+            top: '50%',
+            left: '50%',
+          }}
+          animate={{
+            x: [
+              Math.cos((i * 2 * Math.PI) / 3) * 150,
+              Math.cos((i * 2 * Math.PI) / 3 + Math.PI) * 150,
+              Math.cos((i * 2 * Math.PI) / 3) * 150,
+            ],
+            y: [
+              Math.sin((i * 2 * Math.PI) / 3) * 150,
+              Math.sin((i * 2 * Math.PI) / 3 + Math.PI) * 150,
+              Math.sin((i * 2 * Math.PI) / 3) * 150,
+            ],
+          }}
+          transition={{
+            duration: 6 + i,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+
+      {/* Tech badge — bottom right */}
+      <motion.div
+        className="absolute -bottom-2 -right-2 bg-white rounded-xl shadow-card px-3 py-2 z-10"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
+      >
+        <span className="text-xs font-bold text-primary-500">{personalInfo.yearsOfExperience}+ YRS EXP</span>
+      </motion.div>
+
+      {/* Status badge — top right */}
+      <motion.div
+        className="absolute -top-1 -right-1 bg-white rounded-xl shadow-card px-3 py-2 z-10 flex items-center gap-1.5"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 1.4, type: 'spring', stiffness: 200 }}
+      >
+        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+        <span className="text-xs font-semibold text-dark-500">Available</span>
+      </motion.div>
     </div>
   );
 };
@@ -118,6 +108,12 @@ const AsciiDonut = () => {
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
+  const { displayedText, isComplete } = useTypewriter({
+    segments: ['Mohd', ' Ilyas Shaikh'],
+    typingSpeed: 65,
+    segmentDelay: 350,
+    startDelay: 900,
+  });
 
   useEffect(() => {
     const floatingElements = document.querySelectorAll('.floating-element');
@@ -199,8 +195,8 @@ const Hero = () => {
           animate="visible"
           className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8"
         >
-          {/* Text Content — compact */}
-          <div className="flex-1 text-center lg:text-left lg:max-w-[45%]">
+          {/* Text Content */}
+          <div className="flex-1 text-center lg:text-left lg:max-w-[50%]">
             <motion.div variants={itemVariants} className="mb-3">
               <span className="inline-block px-3 py-1.5 bg-primary-500/10 text-primary-500 rounded-full font-medium text-sm">
                 Welcome to my Portfolio!
@@ -210,10 +206,29 @@ const Hero = () => {
             <motion.h1
               ref={textRef}
               variants={itemVariants}
-              className="text-4xl md:text-5xl lg:text-[3.5rem] font-heading font-bold text-dark-500 mb-2 leading-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-dark-500 mb-2 leading-tight"
             >
               Hi, I'm{' '}
-              <span className="gradient-text">{personalInfo.name}</span>
+              <span className="gradient-text">
+                {displayedText.split(' ').slice(0, 1).join(' ')}
+              </span>
+              {displayedText.split(' ').length > 1 && (
+                <>
+                  <br />
+                  <span className="gradient-text">
+                    {displayedText.split(' ').slice(1).join(' ')}
+                  </span>
+                </>
+              )}
+              {!isComplete && (
+                <span
+                  className="inline-block ml-0.5 w-[3px] h-[0.85em] align-middle"
+                  style={{
+                    animation: 'blink 0.75s step-end infinite',
+                    background: 'linear-gradient(to bottom, var(--color-primary), var(--color-accent))',
+                  }}
+                />
+              )}
             </motion.h1>
 
             <motion.h2
@@ -230,7 +245,7 @@ const Hero = () => {
               {personalInfo.bio}
             </motion.p>
 
-            {/* CTA Buttons + Social in one row on desktop */}
+            {/* CTA Buttons + Social */}
             <motion.div
               variants={itemVariants}
               className="flex flex-wrap gap-3 justify-center lg:justify-start mb-4"
@@ -253,45 +268,36 @@ const Hero = () => {
                 <FaDownload className="text-xs" />
                 Download CV
               </motion.a>
-                          <motion.div
-              variants={itemVariants}
-              className="flex gap-3 justify-center lg:justify-start"
-            >
-              {socialLinks.slice(0, 3).map((link) => {
-                const IconComponent = socialIcons[link.icon];
-                return (
-                  <motion.a
-                    key={link.id}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon"
-                    whileHover={{ scale: 1.1, rotate: 10 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    {IconComponent && <IconComponent className="text-lg" />}
-                  </motion.a>
-                );
-              })}
+              <motion.div
+                variants={itemVariants}
+                className="flex gap-3 justify-center lg:justify-start"
+              >
+                {socialLinks.slice(0, 3).map((link) => {
+                  const IconComponent = socialIcons[link.icon];
+                  return (
+                    <motion.a
+                      key={link.id}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon"
+                      whileHover={{ scale: 1.1, rotate: 10 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      {IconComponent && <IconComponent className="text-lg" />}
+                    </motion.a>
+                  );
+                })}
+              </motion.div>
             </motion.div>
-            </motion.div>
-
-
           </div>
 
-          {/* Hero — ASCII Coding Donut (big!) */}
+          {/* Profile Image with modern animations */}
           <motion.div
             variants={itemVariants}
-            className="flex-1 relative lg:max-w-[55%]"
+            className="flex-1 relative lg:max-w-[45%]"
           >
-            <div className="relative w-full mx-auto">
-              <motion.div
-                className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-cyan-500/15 blur-3xl"
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 5, repeat: Infinity }}
-              />
-              <AsciiDonut />
-            </div>
+            <ProfileHero />
           </motion.div>
         </motion.div>
       </div>
@@ -303,7 +309,7 @@ const Hero = () => {
         transition={{ duration: 1.5, repeat: Infinity }}
       >
         <a href="#about" className="flex flex-col items-center text-dark-100 hover:text-primary-500 transition-colors">
-          <span className="text-xs ">Scroll Down</span>
+          <span className="text-xs">Scroll Down</span>
           <FaChevronDown className="text-lg" />
         </a>
       </motion.div>

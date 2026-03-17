@@ -77,7 +77,7 @@ const Contact = () => {
       label: 'WhatsApp',
       value: personalInfo.phone,
       href: 'https://wa.me/918080611513',
-      color: 'secondary',
+      color: 'green',
     },
     {
       icon: FaMapMarkerAlt,
@@ -131,16 +131,25 @@ const Contact = () => {
                 Get in Touch
               </h3>
 
-              <div className="space-y-4">
+              <motion.div
+                className="space-y-4"
+                initial="hidden"
+                animate={isInView ? 'visible' : 'hidden'}
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } } }}
+              >
                 {contactInfo.map((info) => (
-                  <a
+                  <motion.a
                     key={info.label}
                     href={info.href}
                     className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-card transition-all duration-300 group"
+                    variants={{
+                      hidden: { opacity: 0, x: -20 },
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+                    }}
                   >
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
                       info.color === 'primary' ? 'bg-primary-500/10 text-primary-500 group-hover:bg-primary-500 group-hover:text-white' :
-                      info.color === 'secondary' ? 'bg-secondary-500/10 text-secondary-600 group-hover:bg-secondary-500 group-hover:text-dark-500' :
+                      info.color === 'green' ? 'bg-green-500/10 text-green-600 group-hover:bg-green-500 group-hover:text-white' :
                       'bg-accent-500/10 text-accent-500 group-hover:bg-accent-500 group-hover:text-white'
                     }`}>
                       <info.icon className="text-xl" />
@@ -149,9 +158,9 @@ const Contact = () => {
                       <div className="text-sm text-dark-100">{info.label}</div>
                       <div className="font-medium text-dark-500">{info.value}</div>
                     </div>
-                  </a>
+                  </motion.a>
                 ))}
-              </div>
+              </motion.div>
 
               {/* Social Links */}
               <div className="mt-8">

@@ -32,10 +32,13 @@ const Navbar = () => {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Delay scroll on mobile so menu close animation doesn't block it
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, isOpen ? 300 : 0);
   };
 
   return (
@@ -141,16 +144,15 @@ const Navbar = () => {
                   {link.title}
                 </motion.button>
               ))}
-              <motion.a
-                href="#contact"
+              <motion.button
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: navLinks.length * 0.1 }}
                 className="block w-full text-center mt-4 btn-primary"
-                onClick={() => setIsOpen(false)}
+                onClick={() => handleNavClick('#contact')}
               >
                 Hire Me
-              </motion.a>
+              </motion.button>
             </div>
           </motion.div>
         )}
