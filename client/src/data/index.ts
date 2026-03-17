@@ -18,7 +18,7 @@ export const personalInfo: PersonalInfo = {
   email: "shaikhilyas387@gmail.com",
   phone: "8080611513",
   location: "Mumbai, India",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/Ilyas_Sr_Software_Engineer_Resume.pdf",
   avatarUrl: "/assets/images/avatar.png",
   yearsOfExperience: 3,
   projectsCompleted: 20,
