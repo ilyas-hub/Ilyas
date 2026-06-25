@@ -153,7 +153,7 @@ export const experiences: Experience[] = [
 export const projects: Project[] = [
   {
     id: "proj1",
-    title: "AcademyX — Full-Stack EdTech Platform",
+    title: "AcademyX  Full-Stack EdTech Platform",
     description: "Full-stack EdTech platform with JWT + OTP auth, role-based access (Student/Instructor/Admin), Razorpay payments, video streaming, and Dockerized CI/CD pipeline.",
     longDescription: "Built a full-stack EdTech platform with JWT + OTP auth and role-based access (Student/Instructor/Admin). Implemented course delivery with video streaming, hierarchical content management, and real-time tracking. Integrated Razorpay payments with crypto signature verification, automated enrollment, and email notifications. Dockerized with CI/CD multi-stage builds, container orchestration, and automated testing pipeline.",
     image: "/assets/images/project1.png",
@@ -190,6 +190,25 @@ export const projects: Project[] = [
     ],
     featured: true,
     highlight: "RAG Architecture, Vector Search, Context-Aware AI",
+  },
+  {
+    id: "proj3",
+    title: "ChadWallet  Solana Memecoin Trading Platform",
+    description: "Next.js-powered memecoin trading platform for Solana. Lightning-fast sniping, live wallet tracking, portfolio management, and zero-friction execution across web and mobile.",
+    longDescription: "Built ChadWallet, a production-grade Next.js trading platform that lets users hunt every memecoin on Solana at launch. Features real-time wallet tracking, live trade feeds, portfolio position management, and a responsive web UI synced with the mobile app. Optimized for speed, reliability, and seamless UX across devices.",
+    image: "/assets/images/chadwallet/chadwallet-1.png",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Solana", "Web3"],
+    liveUrl: "https://chadwallet-web-nine.vercel.app/",
+    images: [
+      "/assets/images/chadwallet/chadwallet-1.png",
+      "/assets/images/chadwallet/chadwallet-2.png",
+      "/assets/images/chadwallet/chadwallet-3.png",
+      "/assets/images/chadwallet/chadwallet-4.png",
+      "/assets/images/chadwallet/chadwallet-5.png",
+      "/assets/images/chadwallet/chadwallet-6.png",
+    ],
+    featured: true,
+    highlight: "Solana Trading, Next.js, Web3, Real-Time",
   },
 ];
 

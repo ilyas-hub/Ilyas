@@ -41,7 +41,7 @@ const Experience = () => {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Timeline Line — draw-in animation */}
+          {/* Timeline Line  draw-in animation */}
           <motion.div
             className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-secondary-500 to-accent-500 origin-top"
             initial={{ scaleY: 0 }}

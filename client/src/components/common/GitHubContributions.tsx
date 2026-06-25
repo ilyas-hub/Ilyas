@@ -30,7 +30,7 @@ const GitHubContributions = ({ username }: { username: string }) => {
       cache[key] = json;
       setData(json);
     } catch {
-      // silently fail — image is always shown
+      // silently fail  image is always shown
     } finally {
       setLoading(false);
     }

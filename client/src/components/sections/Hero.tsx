@@ -9,7 +9,7 @@ import { useTypewriter } from '../../hooks/useTypewriter';
 const ProfileHero = () => {
   return (
     <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto">
-      {/* Animated gradient ring — outer */}
+      {/* Animated gradient ring  outer */}
       <motion.div
         className="absolute inset-0 rounded-full"
         style={{
@@ -50,7 +50,7 @@ const ProfileHero = () => {
         />
       </motion.div>
 
-      {/* Floating orbit dots — hidden on mobile to prevent overflow */}
+      {/* Floating orbit dots  hidden on mobile to prevent overflow */}
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
@@ -81,7 +81,7 @@ const ProfileHero = () => {
         />
       ))}
 
-      {/* Tech badge — bottom right */}
+      {/* Tech badge  bottom right */}
       <motion.div
         className="absolute -bottom-2 -right-2 bg-white rounded-xl shadow-card px-3 py-2 z-10"
         initial={{ scale: 0, opacity: 0 }}
@@ -91,7 +91,7 @@ const ProfileHero = () => {
         <span className="text-xs font-bold text-primary-500">{personalInfo.yearsOfExperience}+ YRS EXP</span>
       </motion.div>
 
-      {/* Status badge — top right */}
+      {/* Status badge  top right */}
       <motion.div
         className="absolute -top-1 -right-1 bg-white rounded-xl shadow-card px-3 py-2 z-10 flex items-center gap-1.5"
         initial={{ scale: 0, opacity: 0 }}

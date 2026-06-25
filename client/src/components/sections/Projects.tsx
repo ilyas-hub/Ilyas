@@ -136,7 +136,7 @@ const ProjectCard = ({
       style={{ ...tilt.style, transition: 'transform 0.2s ease-out' }}
     >
       <div className="glass-card h-full overflow-hidden">
-        {/* Project Image — auto-scrolling carousel */}
+        {/* Project Image  auto-scrolling carousel */}
         <div className="relative rounded-lg overflow-hidden mb-4">
           {project.images && project.images.length > 0 ? (
             <ImageCarousel images={project.images} title={project.title} />
@@ -258,7 +258,7 @@ const Projects = () => {
         {/* Projects Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto"
         >
           <AnimatePresence mode="popLayout">
             {projects.map((project, index) => (

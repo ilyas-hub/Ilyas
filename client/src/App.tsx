@@ -14,6 +14,10 @@ import Experience from './components/sections/Experience';
 import Projects from './components/sections/Projects';
 import SkillsMarquee from './components/sections/SkillsMarquee';
 import Contact from './components/sections/Contact';
+import AIAugmentedDeveloper from './components/sections/AIAugmentedDeveloper';
+import WhatAICantReplace from './components/sections/WhatAICantReplace';
+import TeamLeadClientBridge from './components/sections/TeamLeadClientBridge';
+import Certificates from './components/sections/Certificates';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -40,7 +44,7 @@ function App() {
 
     // GSAP ScrollTrigger parallax on floating decorative elements
     ScrollTrigger.matchMedia({
-      // Desktop only — disable parallax on mobile
+      // Desktop only  disable parallax on mobile
       '(min-width: 768px)': () => {
         gsap.utils.toArray<HTMLElement>('.floating-element').forEach((el, i) => {
           gsap.to(el, {
@@ -91,10 +95,14 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Certificates />
         <TechStack />
         <SkillsMarquee />
         <Experience />
         <Projects />
+        <AIAugmentedDeveloper />
+        <WhatAICantReplace />
+        <TeamLeadClientBridge />
         <Contact />
       </main>
 

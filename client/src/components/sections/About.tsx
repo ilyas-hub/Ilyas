@@ -183,7 +183,7 @@ const About = () => {
           </motion.div>
         </div>
 
-        {/* Stats Section — Staggered entry */}
+        {/* Stats Section  Staggered entry */}
         <motion.div
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -220,36 +220,7 @@ const About = () => {
           ))}
         </motion.div>
 
-        {/* GitHub Contributions */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-16"
-        >
-          <div className="glass-card p-6 md:p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl md:text-2xl font-heading font-bold text-dark-500">
-                GitHub Contributions
-              </h3>
-              <a
-                href="https://github.com/ilyas-hub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary-500 hover:text-primary-600 font-medium transition-colors"
-              >
-                View Profile →
-              </a>
-            </div>
-            <div className="rounded-xl overflow-hidden">
-              <img
-                src="/assets/images/github-contributions.png"
-                alt="GitHub Contribution Graph — 441 contributions in the last year"
-                className="w-full h-auto object-cover rounded-xl"
-              />
-            </div>
-          </div>
-        </motion.div>
+
       </div>
     </section>
   );

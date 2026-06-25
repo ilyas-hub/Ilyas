@@ -1,4 +1,4 @@
-import { useRef, useMemo, Suspense } from 'react';
+import { useRef, useMemo, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html, Sphere, MeshDistortMaterial } from '@react-three/drei';
 import { motion, useInView } from 'framer-motion';
@@ -180,7 +180,7 @@ const TechOrbit = () => {
 };
 
 // Main 3D Scene
-const Scene = () => {
+const Scene = ({ enableControls }: { enableControls: boolean }) => {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -191,13 +191,15 @@ const Scene = () => {
       <InnerSphere />
       <TechOrbit />
 
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        autoRotate={false}
-        maxPolarAngle={Math.PI / 1.5}
-        minPolarAngle={Math.PI / 3}
-      />
+      {enableControls && (
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          autoRotate={false}
+          maxPolarAngle={Math.PI / 1.5}
+          minPolarAngle={Math.PI / 3}
+        />
+      )}
     </>
   );
 };
@@ -206,6 +208,17 @@ const Scene = () => {
 const TechStack = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia('(pointer: coarse)');
+    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
+    media.addEventListener('change', handleChange);
+    return () => media.removeEventListener('change', handleChange);
+  }, []);
 
   return (
     <section
@@ -248,13 +261,14 @@ const TechStack = () => {
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full h-[500px] md:h-[600px] lg:h-[700px]"
+          style={{ touchAction: isMobile ? 'pan-y' : 'auto' }}
         >
           <Canvas
             camera={{ position: [0, 0, 14], fov: 50 }}
-            style={{ background: 'transparent' }}
+            style={{ background: 'transparent', pointerEvents: isMobile ? 'none' : 'auto' }}
           >
             <Suspense fallback={null}>
-              <Scene />
+              <Scene enableControls={!isMobile} />
             </Suspense>
           </Canvas>
         </motion.div>
