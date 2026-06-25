@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
 
-
 const certificates = [
   {
     id: 'dsa',
@@ -9,7 +8,7 @@ const certificates = [
     short: 'DSA',
     image: '/assets/images/certificates/DSA.png',
     description:
-      'In-depth problem solving with arrays, trees, graphs, dynamic programming, and greedy algorithms  rated among top performers.',
+      'In-depth problem solving with arrays, trees, graphs, dynamic programming, and greedy algorithms — rated among top performers.',
   },
   {
     id: 'lld',
@@ -63,9 +62,9 @@ const Certificates = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-16"
+          className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center mb-16"
         >
-          <div className="text-center md:text-left">
+          <div className="md:col-span-3">
             <span className="inline-block px-4 py-2 bg-primary-500/10 text-primary-500 rounded-full font-medium text-sm mb-4">
               Achievements
             </span>
@@ -73,25 +72,21 @@ const Certificates = () => {
               Certifications
             </h2>
             <p className="text-dark-100 max-w-lg">
-              These certifications are not checkboxes  they represent hands-on mastery
-              in data structures, system design, and full-stack development. Each one
-              reflects hundreds of hours of structured practice and real-world application.
+              These credentials represent hands-on mastery in data structures, system design,
+              and full-stack development. Each one reflects hundreds of hours of structured
+              practice and real-world application.
             </p>
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="hidden md:flex justify-center"
-          >
-            <div className="w-44 h-44 lg:w-52 lg:h-52 rounded-full overflow-hidden border-4 border-white shadow-card">
-              <img
-                src="/assets/images/avatar.png"
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </motion.div>
+          <div className="md:col-span-2 hidden md:flex justify-center">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={isInView ? { scale: 1, opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="w-40 h-40 rounded-full bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center shadow-card"
+            >
+              <span className="text-6xl">🏆</span>
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* Certificates grid */}
@@ -111,14 +106,20 @@ const Certificates = () => {
             >
               <div className="glass-card p-0 overflow-hidden flex flex-col h-full">
                 {/* Image area */}
-                <div className="relative overflow-hidden">
+                <a
+                  href={cert.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative overflow-hidden w-full block"
+                  aria-label={`Open ${cert.title} certificate in new tab`}
+                >
                   <img
                     src={cert.image}
                     alt={cert.title}
                     className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                     loading="lazy"
                   />
-                </div>
+                </a>
 
                 {/* Content area */}
                 <div className="p-6 text-center flex-1">
